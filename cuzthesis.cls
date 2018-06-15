@@ -6,7 +6,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 
 %---------- Option ----------
 % 博士、硕士可选参数，用于区别格式
-\newif\if@cpsupervisor\@cpsupervisortrue
+%\newif\if@cpsupervisor\@cpsupervisortrue
 %\DeclareOption{master}{\@doctorfalse}
 \DeclareOption{nocpsupervisor}{\@cpsupervisorfalse}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
@@ -167,6 +167,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 %\newcommand*\serialnumber[1]{\gdef\ZJU@serialnumber{#1}}		% 单位代码
 %\newcommand*\secretlevel[1]{\gdef\ZJU@secretlevel{#1}}			% 密级
 \newcommand*\studentnumber[1]{\gdef\CUZ@studentnumber{#1}}		% 学号
+\newcommand*{\graduate}[1]{\gdef\CUZ@graduate{#1}}				% 届
 \newcommand*\supervisor[1]{\gdef\CUZ@supervisor{#1}}			% 指导教师
 \newcommand*\supervisortitle[1]{\gdef\CUZ@supervisortitle{#1}}  % 指导教师职称 
 %\newcommand*\cpsupervisor[1]{\gdef\ZJU@cpsupervisor{#1}}		% 合作导师
@@ -372,20 +373,21 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 	\pdfbookmark[0]{封面}{anchor_cover}
 	\thispagestyle{CUZ@empty}
 %	分类号：\CUZunderline[90pt]{\ZJU@classification}
-	\hfill
+%	\hfill
 %	单位代码：\CUZunderline[60pt]{\ZJU@serialnumber} \par
 %	密\quad 级：\CUZunderline[90pt]{\ZJU@secretlevel}
-	\hfill
+%	\hfill
 %	学\CUZspace 号：\CUZunderline[60pt]{\CUZ@studentnumber} \par
-	\vspace{9mm}
+	\vspace{\textheight}
 	\begin{center}
-		\includegraphics[width=60mm]{./logo/ZJDX.pdf}\par
-		\vspace{4mm}
+		\includegraphics[width=.7\textwidth]{./logo/cuz.png}\par
+		\vspace{5mm}
 		{
-		    {\songti \zihao{-1}本科毕业论文}
+		    {\lishu \zihao{1} 毕业设计(论文)} \par
+		    (\CUZ@graduate 届)
 		}\par
-		\vspace{6mm}
-		\includegraphics[width=22.8mm]{./logo/QSY.pdf}
+%		\vspace{6mm}
+%		\includegraphics[width=22.8mm]{./logo/QSY.pdf}
 	\end{center}
 	\vspace{6mm}
 	% 新建一个长度寄存器，存放封面标题下划线宽度值
@@ -424,7 +426,8 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 			\end{minipage}}\\*
 		\end{tabular}
 
-		\vskip 9mm
+		\vfill
+%		\vskip 9mm
 		\begin{tabular}{>{\zihao{4}\songti}l>{\zihao{4}\fangsong}l}
 			%申请人姓名: & \CUZunderline[200pt]{\CUZ@author} \\[3mm]
 			% 由于本模板无法整齐排印生僻字（原因不明）
@@ -444,11 +447,11 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 			所在学院: & \CUZunderline[200pt]{\CUZ@institute}
 		\end{tabular}
 	\end{center}
-	\vskip 10mm
-	\begin{center}
-		{\zihao{-3}\songti\bfseries 论文提交日期\CUZunderline[150pt]{%
-		\CUZ@submitdate}}
-	\end{center}
+%	\vspace{5mm}
+%	\begin{center}
+%		{\zihao{-3}\songti\bfseries 论文提交日期\CUZunderline[150pt]{%
+%		\CUZ@submitdate}}
+%	\end{center}
 	%清空变量节省空间
 %	\global\let\ZJU@classification\@empty
 %	\global\let\ZJU@serialnumber\@empty
