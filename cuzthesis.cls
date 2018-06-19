@@ -175,7 +175,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 \newcommand*\major[1]{\gdef\CUZ@major{#1}}						% 专业名称
 %\newcommand*\research[1]{\gdef\ZJU@research{#1}}				% 研究方向
 \newcommand*\institute[1]{\gdef\CUZ@institute{#1}}				% 所在学院
-\newcommand*\submitdate[1]{\gdef\CUZ@submitdate{#1}}			% 提交日期
+%\newcommand*\submitdate[1]{\gdef\CUZ@submitdate{#1}}			% 提交日期
 
 % 中文题名页
 %\newcommand*\reviewerA[1]{\gdef\ZJU@reviewerA{#1}}				% 论文评阅人1
@@ -380,27 +380,28 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 %	学\CUZspace 号：\CUZunderline[60pt]{\CUZ@studentnumber} \par
 	\vspace{\textheight}
 	\begin{center}
-		\includegraphics[width=.7\textwidth]{./logo/cuz.png}\par
-		\vspace{5mm}
+		\includegraphics[width=.75\textwidth]{./logo/cuz.png}\par
+		\vspace{20mm}
 		{
-		    {\lishu \zihao{1} 毕业设计(论文)} \par
-		    (\CUZ@graduate 届)
+		    {\lishu \zihao{-0} \bfseries 毕业设计(论文)} \par
+		    \vspace{5mm}
+		    {\heiti \zihao{-2} (\;\CUZ@graduate 届\;)}
 		}\par
 %		\vspace{6mm}
 %		\includegraphics[width=22.8mm]{./logo/QSY.pdf}
 	\end{center}
-	\vspace{6mm}
+	\vspace{10mm}
 	% 新建一个长度寄存器，存放封面标题下划线宽度值
 	\newlength{\titleulwidth@cover}
-	\addtolength{\titleulwidth@cover}{260pt}
+	\addtolength{\titleulwidth@cover}{300pt}
 	\begin{center}
-		\begin{tabular}[t]{>{\zihao{3}\songti\mdseries}rl}
-			中文论文题目: &
+		\begin{tabular}[t]{>{\zihao{2}\heiti\mdseries}rc}
+			论文题目 &
 			{\begin{minipage}[t][60pt][t]{\titleulwidth@cover}
 				\zihao{-2} \heiti\bfseries
 				\uline{\CUZ@title\hfill}
 			\end{minipage}} \\%[20pt]
-			\rule{0pt}{10mm}英文论文题目: &
+			\rule{0pt}{10mm} &
 			{\begin{minipage}[t][60pt][t]{\titleulwidth@cover}
 				\newlength{\etitlelength}
 				\fontsize{16}{23}\bfseries
@@ -409,7 +410,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 % 而引起的下划线行数变化，下划线行数就是英文标题行数。目前最大的支持行数为3行，
 % 不过行数可以根据需要扩展，只要符合页面格式的美观即可。不过论文编写规则中提到：
 % 英文标题翻译应简短准确，一般不应超过150个字母，学校规定不可以加副标题。
-				\CUZ@englishtitle\\*
+				\MakeUppercase{\CUZ@englishtitle}\\*
 				\ifdim\etitlelength<\titleulwidth@cover
 					\raisebox{31pt}[0pt][0pt]{\parbox[t][][t]{\titleulwidth@cover}{
 					\rule{\titleulwidth@cover}{\ULthickness}}}
@@ -425,26 +426,20 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 				\fi\fi\fi
 			\end{minipage}}\\*
 		\end{tabular}
-
 		\vfill
 %		\vskip 9mm
-		\begin{tabular}{>{\zihao{4}\songti}l>{\zihao{4}\fangsong}l}
+		\begin{tabular}{>{\zihao{3}\songti}c>{\zihao{3}\songti}c>{\zihao{3}\songti}c>{\zihao{3}\songti}c}
 			%申请人姓名: & \CUZunderline[200pt]{\CUZ@author} \\[3mm]
 			% 由于本模板无法整齐排印生僻字（原因不明）
 			% 名字中有生僻字情况的 可以预留一个em框长度
             % 后期可以将字以文本框的形式贴上(OS X 下直接在Preview里就可以加入文本框)
             % 如果打印店的机器未安装Adobe Fangsong字体，这个文本框不会被实际打印出来
-			学生姓名: & \CUZunderline[200pt]{\CUZ@author \hspace{1em}} \\[3mm]
-			%指导教师: & \CUZunderline[200pt]{\CUZ@supervisor} \\[3mm]
-			指导教师: & \CUZunderline[200pt]{\CUZ@supervisor \hspace{1em} \CUZ@supervisortitle} \\[3mm]
-%			\if@cpsupervisor
-%			合作导师: & \CUZunderline[200pt]{\ZJU@cpsupervisor \hspace{1em} \ZJU@cspvtitle} \\[3mm]
-%			\fi
-			%专业名称: & \CUZunderline[200pt]{\CUZ@major} \\[3mm]
-			专业类别: & \CUZunderline[200pt]{\CUZ@major} \\[3mm]
-			%研究方向: & \CUZunderline[200pt]{\ZJU@research} \\[3mm]
-%			专业学位领域: & \CUZunderline[200pt]{\ZJU@research} \\[3mm]
-			所在学院: & \CUZunderline[200pt]{\CUZ@institute}
+			\makebox[6em][s]{学生姓名}： & \CUZunderline[120pt]{\CUZ@author} &
+			\makebox[3em][s]{学号}： & \CUZunderline[120pt]{\CUZ@studentnumber} \\
+			\rule{0pt}{10mm} \makebox[6em][s]{二级学院名称}： & \CUZunderline[120pt]{\CUZ@institute} &
+			\makebox[3em][s]{专业}： & \CUZunderline[120pt]{\CUZ@major} \\
+			\rule{0pt}{10mm} \makebox[6em][s]{指导教师}： & \CUZunderline[120pt]{\CUZ@supervisor} &
+			\makebox[3em][s]{职称}： & \CUZunderline[120pt]{\CUZ@supervisortitle}
 		\end{tabular}
 	\end{center}
 %	\vspace{5mm}
@@ -463,7 +458,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 	\global\let\CUZ@major\@empty
 %	\global\let\ZJU@research\@empty
 	\global\let\CUZ@institute\@empty
-	\global\let\CUZ@submitdate\@empty
+%	\global\let\CUZ@submitdate\@empty
 %	\global\let\classification\relax
 %	\global\let\serialnumber\relax
 %	\global\let\secretlevel\relax
@@ -474,7 +469,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 	\global\let\major\relax
 %	\global\let\research\relax
 	\global\let\institute\relax
-	\global\let\submitdate\relax
+%	\global\let\submitdate\relax
 }
 % 中文题名页
 \newcommand\ZJUmakeCNtitlepage{
@@ -707,46 +702,30 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 % 独创声明与版权协议转让页
 \newcommand\makeOSpage{%
 	\cleardoublepage
-	\pdfbookmark[0]{独创性声明}{anchor_os}
+	\pdfbookmark[0]{郑重声明}{anchor_os}
 	\thispagestyle{CUZ@empty}
 	{
 		\newcommand\signature@date{签字日期：%
 			\hspace{8ex}年\hspace{4ex}月\hspace{4ex}日}
-		\linespread{1.7}			% 相当于word中的1.5倍行距。
-		\songti\zihao{-4}
-		\vspace*{1ex}
+		\linespread{2}			% 相当于word中的1.5倍行距。
+		\songti\zihao{4}
+		\vspace*{.5em}
 		\begin{center}
-			\zihao{-2}浙江大学研究生学位论文独创性声明
+			\heiti\zihao{-2}\makebox[6em][s]{郑重声明}
 		\end{center}
-		\vspace{20pt}
+		\vspace{3.1em}
 
-		本人声明所呈交的学位论文是本人在导师指导下进行的研究工作及取得的研究成果%
-		。除了文中特别加以标注和致谢的地方外，论文中不包含其他人已经发表或撰写过%
-		的研究成果，也不包含为获得{\kaishu\zihao{4}\bfseries\underline{~浙江大%
-		学~}}或其他教育机构的学位或证书而使用过的材料。与我一同工作的同志对本研%
-		究所做的任何贡献均已在论文中作了明确的说明并表示谢意。
+		我谨在此郑重声明：本人所写的毕业论文《\CUZ@title》均系本人独立完成，没有抄袭行为，凡涉及其他作者的观点和材料，均作了注释，若有不实，后果由本人承担。
 
-		\vspace{62pt}
-
-		学位论文作者签名：\hspace{13ex} \signature@date
-
-		\vspace{70pt}
-		\begin{center}
-			\zihao{-2} 学位论文版权使用授权书
-		\end{center}
-		\vspace{20pt}
-
-		本学位论文作者完全了解{\kaishu\zihao{4}\bfseries\underline{~浙江大学~}}%
-		有权保留并向国家有关部门或机构送交本论文的复印件和磁盘，允许论文被查阅和%
-		借阅。本人授权{\kaishu\zihao{4}\bfseries\underline{~浙江大学~}}可以将学%
-		位论文的全部或部分内容编入有关数据库进行检索和传播，可以采用影印、缩印或%
-		扫描等复制手段保存、汇编学位论文。
-
-		（保密的学位论文在解密后适用本授权书）\\[20pt]
-		\begin{tabular}{p{0.5\textwidth}p{0.5\textwidth}}
-			学位论文作者签名：	&  导师签名：\\[20pt]
-			\signature@date 	&  \signature@date
-		\end{tabular}
+		\vspace{3.5em}
+		{
+			\heiti\zihao{-3}\bfseries
+			\renewcommand\arraystretch{2}
+			\begin{tabular}{@{} p{0.5\linewidth} p{0.5\linewidth} @{}}
+				 & 承诺人（签名）：\\
+				\rule{0pt}{10mm} & \hspace{2em} 年 \hspace{1.5em} 月 \hspace{1.5em} 日 \\
+			\end{tabular} \par
+		}
 	}
 }
 
