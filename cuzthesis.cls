@@ -322,7 +322,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 #1}}{}}
 
 %---------- 本机字体设置 ----------
-\RequirePackage{fontspec}
+\RequirePackage{fontspec,xunicode,xltxtra}
 \setmainfont{TeX Gyre Termes}	%相当于MS Word中的Times New Roman。
 \setsansfont{TeX Gyre Heros}	%相当于MS Word中的Helvetica。
 \setmonofont{TeX Gyre Cursor}	%相当于MS Word中的Curier。
@@ -349,7 +349,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 
 % 设置中文正文字体为仿宋，加粗为黑体，斜体为楷体
 % 除非您使用windows操作系统编译论文，否则强烈不推荐使用微软系的字体
-\setCJKmainfont[BoldFont={Adobe Heiti Std}, ItalicFont={Adobe Kaiti Std}]{Adobe Fangsong Std}
+\setCJKmainfont{Adobe Fangsong Std}
 %\setCJKfallbackfamilyfont{\CJKrmdefault}[BoldFont={Adobe Heiti Std}, ItalicFont={Adobe Kaiti Std}]{Adobe Fangsong Std}
 % 由于汉字都是等宽的，等宽字体通常应用在代码段或verbatim环境中，故这里选用黑体后更改。
 %\setCJKmonofont{Noto Sans CJK SC} % 十分优雅美观的思源黑体
@@ -361,10 +361,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 \newcommand\CUZunderline[2][90pt]{\uline{\hbox to #1{\hss#2\hss}}\hskip3pt}
 % 重新定义\maketitle命令
 \renewcommand\maketitle{
-% \@mainmatterfalse
 	\CUZmakecover
-%	\ZJUmakeCNtitlepage
-%	\ZJUmakeENtitlepage % 软件学院硕士论文要求显示英文题名页
 	\makeOSpage
 }
 % 封面
@@ -383,7 +380,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 		\includegraphics[width=.75\textwidth]{./logo/cuz.png}\par
 		\vspace{20mm}
 		{
-		    {\lishu \zihao{-0} \bfseries 毕业设计(论文)} \par
+		    {\lishu \zihao{-0} \bfseries{毕业设计(论文)}} \par
 		    \vspace{5mm}
 		    {\heiti \zihao{-2} (\;\CUZ@graduate 届\;)}
 		}\par
@@ -398,7 +395,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 		\begin{tabular}[t]{>{\zihao{2}\heiti\mdseries}rc}
 			论文题目 &
 			{\begin{minipage}[t][60pt][t]{\titleulwidth@cover}
-				\zihao{-2} \heiti\bfseries
+				\zihao{-2} \heiti
 				\uline{\CUZ@title\hfill}
 			\end{minipage}} \\%[20pt]
 			\rule{0pt}{10mm} &
@@ -442,261 +439,17 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 			\makebox[3em][s]{职称}： & \CUZunderline[120pt]{\CUZ@supervisortitle}
 		\end{tabular}
 	\end{center}
-%	\vspace{5mm}
-%	\begin{center}
-%		{\zihao{-3}\songti\bfseries 论文提交日期\CUZunderline[150pt]{%
-%		\CUZ@submitdate}}
-%	\end{center}
 	%清空变量节省空间
-%	\global\let\ZJU@classification\@empty
-%	\global\let\ZJU@serialnumber\@empty
-%	\global\let\ZJU@secretlevel\@empty
 	\global\let\CUZ@studentnumber\@empty
 	\global\let\CUZ@author\@empty
 	\global\let\CUZ@supervisor\@empty
-%	\global\let\ZJU@cpsupervisor\@empty
 	\global\let\CUZ@major\@empty
-%	\global\let\ZJU@research\@empty
 	\global\let\CUZ@institute\@empty
-%	\global\let\CUZ@submitdate\@empty
-%	\global\let\classification\relax
-%	\global\let\serialnumber\relax
-%	\global\let\secretlevel\relax
 	\global\let\studentnumber\relax
 	\global\let\author\relax
 	\global\let\supervisor\relax
-%	\global\let\cpsupervisor\relax
 	\global\let\major\relax
-%	\global\let\research\relax
 	\global\let\institute\relax
-%	\global\let\submitdate\relax
-}
-% 中文题名页
-\newcommand\ZJUmakeCNtitlepage{
-	\cleardoublepage
-	\pdfbookmark[0]{中文题名页}{anchor_cntitle}
-	\thispagestyle{CUZ@empty}
-	{
-	\linespread{1.3}
-	%\vspace*{2mm}
-	\begin{center}
-		\newlength{\ctitlelength}
-		\newlength{\bk@ctitlelength}
-		\settowidth{\ctitlelength}{\zihao{-2}\CUZ@title}
-		\settowidth{\bk@ctitlelength}{\zihao{-2}\CUZ@title}
-		% 新建一个长度寄存器，存放中文题名页标题宽度值
-		\newlength{\ctitle@width}
-		\setlength{\ctitle@width}{300pt}
-		% 因为根据规定，中文标题字符数不超过50个字，这里最多为28字，严格适配50字
-		% 将
-		\ifdim\ctitlelength>2\titleulwidth@cover
-			\ClassError{zjuthesis}{%
-				Your Chinese title name is too long, please \MessageBreak
-				make it a bit shorter. It must be less than \MessageBreak
-				28 characters.
-			}{%
-				Oh dear! If your ctitle is still too long, \MessageBreak
-				You must send me an email to report the need. \MessageBreak
-				My email is niyayuan@outlook.com. o(∩_∩)o
-			}
-		\else\ifdim\ctitlelength<\ctitle@width
-			\addtolength{\ctitlelength}{30pt}
-			\begin{minipage}[b][50pt][b]{\ctitle@width}
-				\centering
-				\zihao{-2}\fangsong\bfseries
-				\CUZ@title\\*	% 这个就是中文标题，隐藏的很深。
-				\raisebox{23pt}[0pt][0pt]{\parbox[t][][t]{\ctitle@width}{
-				\centering
-				\rule{\ctitlelength}{\ULthickness}}}
-			\end{minipage}
-			\else\ifdim\ctitlelength<2\ctitle@width
-				\addtolength{\ctitlelength}{-\ctitle@width}
-				% 这里尺寸是控制换行后第二行字数的，若小于4个，则不换行。
-				\ifdim\ctitlelength<4em
-					\addtolength{\bk@ctitlelength}{30pt}
-					\begin{minipage}[b][50pt][b]{\bk@ctitlelength}
-						\centering
-						\zihao{-2}\fangsong\bfseries
-						\CUZ@title\\*	% 这个就是中文标题，隐藏的很深。
-						\raisebox{23pt}[0pt][0pt]{\parbox[t][][t]{\bk@ctitlelength}{
-						\centering
-						\rule{\bk@ctitlelength}{\ULthickness}}}
-					\end{minipage}
-				\else
-					\begin{minipage}[b][50pt][b]{\ctitle@width}
-						\centering
-						\zihao{-2}\fangsong\bfseries
-						\CUZ@title\\*	% 这个就是中文标题，隐藏的很深。
-						\addtolength{\ctitlelength}{40pt}
-						\raisebox{52pt}[0pt][0pt]{\parbox[t][][t]{\ctitle@width}{
-						\centering
-						\rule{\ctitle@width}{\ULthickness}\\*
-						\rule{\ctitlelength}{\ULthickness}}}
-					\end{minipage}
-				\fi
-		\fi\fi\fi
-	\end{center}
-	\begin{center}
-		\includegraphics[width=22.8mm]{./logo/QSY.pdf}
-	\end{center}
-	\vspace{4mm}
-	\begin{center}
-		{\zihao{3}\songti\bfseries 论文作者签名：\CUZunderline[120pt]{\hfill}}\\[8mm]
-		{\zihao{3}\songti\bfseries 指导教师签名：\CUZunderline[120pt]{\hfill}}
-	\end{center}
-	\vspace{8mm}
-	\begin{center}
-		\begin{tabular}{>{\zihao{4}\songti}r>{\zihao{4}\songti}l}
-			论文评阅人1: & \CUZunderline[260pt]{\ZJU@reviewerA}\\[3mm]
-			评阅人2: & \CUZunderline[260pt]{\ZJU@reviewerB}\\[3mm]
-			评阅人3: & \CUZunderline[260pt]{\ZJU@reviewerC}\\[3mm]
-			评阅人4: & \CUZunderline[260pt]{\ZJU@reviewerD}\\[3mm]
-			评阅人5: & \CUZunderline[260pt]{\ZJU@reviewerE}\\[12mm]
-			答辩委员会主席: & \CUZunderline[260pt]{\ZJU@chairperson}\\[3mm]
-			委员1: & \CUZunderline[260pt]{\ZJU@commissionerA}\\[3mm]
-			委员2: & \CUZunderline[260pt]{\ZJU@commissionerB}\\[3mm]
-			委员3: & \CUZunderline[260pt]{\ZJU@commissionerC}\\[3mm]
-			委员4: & \CUZunderline[260pt]{\ZJU@commissionerD}\\[3mm]
-			委员5: & \CUZunderline[260pt]{\ZJU@commissionerE}
-		\end{tabular}
-	\end{center}
-	\vspace{10mm}
-	\begin{center}
-	%\hfill{\zihao{4}\songti 答辩日期: \CUZunderline[150pt]{\ZJU@defencedate}}
-	{\zihao{4}\songti 答辩日期: \CUZunderline[150pt]{\ZJU@defencedate}}
-    \end{center}
-	}
-	%清空变量节省空间
-	\global\let\ZJU@reviewerA\@empty
-	\global\let\ZJU@reviewerB\@empty
-	\global\let\ZJU@reviewerC\@empty
-	\global\let\ZJU@reviewerD\@empty
-	\global\let\ZJU@reviewerE\@empty
-	\global\let\ZJU@chairperson\@empty
-	\global\let\ZJU@commissionerA\@empty
-	\global\let\ZJU@commissionerB\@empty
-	\global\let\ZJU@commissionerC\@empty
-	\global\let\ZJU@commissionerD\@empty
-	\global\let\ZJU@commissionerE\@empty
-	\global\let\ZJU@defencedate\@empty
-	\global\let\CUZ@title\@empty
-	\global\let\title\relax
-	\global\let\reviewerA\relax
-	\global\let\reviewerB\relax
-	\global\let\reviewerC\relax
-	\global\let\reviewerD\relax
-	\global\let\reviewerE\relax
-	\global\let\chairperson\relax
-	\global\let\commissionerA\relax
-	\global\let\commissionerB\relax
-	\global\let\commissionerC\relax
-	\global\let\commissionerD\relax
-	\global\let\commissionerE\relax
-	\global\let\defencedate\relax
-}
-
-% 英文题名页
-\newcommand\ZJUmakeENtitlepage{
-	\cleardoublepage
-	\pdfbookmark[0]{英文题名页}{anchor_entitle}
-	\thispagestyle{CUZ@empty}
-	{
-	\linespread{1.3}
-	%\vspace*{8mm}
-	\vspace*{2mm}
-	\begin{center}
-		% 新建一个长度寄存器，存放英文题名页标题宽度值
-		\newlength{\etitle@width}
-		\addtolength{\etitle@width}{300pt}
-		\begin{minipage}[b][50pt][b]{\etitle@width}
-			\centering
-			\fontsize{16}{23}\bfseries
-			\settowidth{\etitlelength}{\CUZ@englishtitle}
-			\CUZ@englishtitle\\*	% 这个就是英文标题，隐藏的也很深。
-			\ifdim\etitlelength<\etitle@width
-				\addtolength{\etitlelength}{30pt}
-				\raisebox{25pt}[0pt][0pt]{\parbox[t][][t]{\etitle@width}{
-				\centering
-				\rule{\etitlelength}{\ULthickness}}}
-			\else\ifdim\etitlelength<2\etitle@width
-					\addtolength{\etitlelength}{-\etitle@width}
-					\addtolength{\etitlelength}{40pt}
-					\raisebox{55pt}[0pt][0pt]{\parbox[t][][t]{\etitle@width}{
-					\centering
-					\rule{\etitle@width}{\ULthickness}\\*
-					\rule{\etitlelength}{\ULthickness}}}
-			\else\ifdim\etitlelength<3\etitle@width
-					\addtolength{\etitlelength}{-2\etitle@width}
-					\addtolength{\etitlelength}{80pt}
-					\raisebox{85pt}[0pt][0pt]{\parbox[t][][t]{\etitle@width}{
-					\centering
-					\rule{\etitle@width}{\ULthickness}\\*
-					\rule{\etitle@width}{\ULthickness}\\*
-					\rule{\etitlelength}{\ULthickness}}}
-			\fi\fi\fi
-		\end{minipage}
-	\end{center}
-	\begin{center}
-		\includegraphics[width=22.8mm]{./logo/QSY.pdf}
-	\end{center}
-	%\vspace{6mm}
-	\vspace{5mm}
-	\begin{center}
-		\begin{tabular}{>{\zihao{3}\bfseries}rl}
-			Author's signature: & \CUZunderline[120pt]{\hfill}\\[10mm]
-			Supervisor's signature: & \CUZunderline[120pt]{\hfill}
-		\end{tabular}
-	\end{center}
-	%\vspace{8mm}
-	\vspace{7mm}
-	\begin{center}
-		\begin{tabular}{>{\zihao{4}}r>{\zihao{4}}l}
-		%External Reviewers: & \CUZunderline[260pt]{\ZJU@enreviewerA}\\[2mm]
-		Thesis Reviewer 1: & \CUZunderline[240pt]{\ZJU@enreviewerA}\\[2mm]
-	    Thesis Reviewer 2: & \CUZunderline[240pt]{\ZJU@enreviewerB}\\[2mm]
-		Thesis Reviewer 3: & \CUZunderline[240pt]{\ZJU@enreviewerC}\\[2mm]
-	    Thesis Reviewer 4: & \CUZunderline[240pt]{\ZJU@enreviewerD}\\[2mm]
-		Thesis Reviewer 5: & \CUZunderline[240pt]{\ZJU@enreviewerE}\\[10mm]
-		Examining Committe Chair: & \CUZunderline[240pt]{\ZJU@enchairperson}\\[2mm]
-	    Committeeman 1: & \CUZunderline[240pt]{\ZJU@encommissionerA}\\[2mm]
-	    Committeeman 2: & \CUZunderline[240pt]{\ZJU@encommissionerB}\\[2mm]
-	    Committeeman 3: & \CUZunderline[240pt]{\ZJU@encommissionerC}\\[2mm]
-	    Committeeman 4: & \CUZunderline[240pt]{\ZJU@encommissionerD}\\[2mm]
-	    Committeeman 5: & \CUZunderline[240pt]{\ZJU@encommissionerE}
-		\end{tabular}
-	\end{center}
-	\vspace{12mm}
-	\begin{center}
-	{\zihao{4} Date of oral defence: \CUZunderline[150pt]{\ZJU@eendefencedate}}
-    \end{center}
-  }
-		%清空变量节省空间
-	\global\let\ZJU@enreviewerA\@empty
-	\global\let\ZJU@enreviewerB\@empty
-	\global\let\ZJU@enreviewerC\@empty
-	\global\let\ZJU@enreviewerD\@empty
-	\global\let\ZJU@enreviewerE\@empty
-	\global\let\ZJU@enchairperson\@empty
-	\global\let\ZJU@encommissionerA\@empty
-	\global\let\ZJU@encommissionerB\@empty
-	\global\let\ZJU@encommissionerC\@empty
-	\global\let\ZJU@encommissionerD\@empty
-	\global\let\ZJU@encommissionerE\@empty
-	\global\let\ZJU@eendefencedate\@empty
-	\global\let\CUZ@englishtitle\@empty			
-	\global\let\englishtitle\relax
-	\global\let\enreviewerA\relax
-	\global\let\enreviewerB\relax
-	\global\let\enreviewerC\relax
-	\global\let\enreviewerD\relax
-	\global\let\enreviewerE\relax
-	\global\let\enchairperson\relax
-	\global\let\encommissionerA\relax
-	\global\let\encommissionerB\relax
-	\global\let\encommissionerC\relax
-	\global\let\encommissionerD\relax
-	\global\let\encommissionerE\relax
-	\global\let\eendefencedate\relax
 }
 
 % 独创声明与版权协议转让页
@@ -705,13 +458,11 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 	\pdfbookmark[0]{郑重声明}{anchor_os}
 	\thispagestyle{CUZ@empty}
 	{
-		\newcommand\signature@date{签字日期：%
-			\hspace{8ex}年\hspace{4ex}月\hspace{4ex}日}
 		\linespread{2}			% 相当于word中的1.5倍行距。
 		\songti\zihao{4}
 		\vspace*{.5em}
 		\begin{center}
-			\heiti\zihao{-2}\makebox[6em][s]{郑重声明}
+			{\zihao{-2}\heiti\bfseries\makebox[6em][s]{郑重声明}}
 		\end{center}
 		\vspace{3.1em}
 
@@ -723,7 +474,7 @@ Created: 2014.09.15 by Sky and Hamburger,  Modified by Kwen String at 2016.04.08
 			\renewcommand\arraystretch{2}
 			\begin{tabular}{@{} p{0.5\linewidth} p{0.5\linewidth} @{}}
 				 & 承诺人（签名）：\\
-				\rule{0pt}{10mm} & \hspace{2em} 年 \hspace{1.5em} 月 \hspace{1.5em} 日 \\
+				 & \hspace{2em} 年 \hspace{1.5em} 月 \hspace{1.5em} 日 \\
 			\end{tabular} \par
 		}
 	}
